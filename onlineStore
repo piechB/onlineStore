@@ -1,0 +1,59 @@
+import java.util.Scanner;
+import java.text.NumberFormat;
+import java.util.Locale;
+
+public class NewStore {
+    static int[] itemNo = {1,2,3,4,5};
+    static String[] name = {"Computer", "Printer", "Toner", "Speaker", "Usb"};
+    static double[] price = {222.59, 99.99, 13.5, 17.3, 5};
+    static double total = 0;
+    static NumberFormat nf;
+ 
+    public static void main(String[] args) {
+        nf = NumberFormat.getCurrencyInstance(Locale.UK);
+     
+        System.out.println("******************************");
+        System.out.println("*   Welcome to my store!     *");
+        System.out.println("******************************");
+        
+        listProduct(itemNo, name, price);
+        System.out.println("What product would you like to order? Enter its identity number from the list above.\nOr enter 0 to finish yor shopping!");
+        shoppingList();
+        System.out.println("You have spent in total: " + nf.format(total) + "\nThank you for shopping with us!");
+    }
+    
+    static void listProduct(int[] itemNo, String[] name, double[] price){
+        System.out.println("Available products: ");
+        for(int i = 0; i<itemNo.length; i++){
+            System.out.println(itemNo[i] + " - " + name[i] + " ------> " + nf.format(price[i]) + " per item");
+        }
+    }
+    
+    private static void shoppingList(){
+        Scanner inputProd = new Scanner(System.in);
+        Scanner inputQty = new Scanner(System.in);
+        int userInputProd = inputProd.nextInt();
+        
+        while(userInputProd != 0){
+            System.out.println("Please enter the product's quantity you would like to order:");
+            int userInputQty = inputQty.nextInt();
+            for(int i = 0; i<itemNo.length; i++){
+                if(userInputProd == itemNo[i]){
+                    System.out.println("You've selected number: " + itemNo[i] + ", i.e. " + name[i] + " and its qty: " + userInputQty + ". Total value: " + nf.format(price[i] * userInputQty));
+                    System.out.println("-------------------------------------");
+                    total += price[i] * userInputQty;
+                }
+            }
+            
+        System.out.println("You have spent by now: " + nf.format(total));
+        System.out.println("-------------------------------------");
+        System.out.println("Please enter the product's identity number from the following list to continue, or 0 to finish your shopping:");
+        listProduct(itemNo, name, price);
+        userInputProd = inputProd.nextInt();
+        }
+    }
+ }
+    
+
+
+
